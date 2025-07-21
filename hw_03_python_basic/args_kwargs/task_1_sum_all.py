@@ -2,7 +2,7 @@ def sum_all(*args):
     count = 0 
     for i in args:
         count += i
-        lenght_args = len(args)
+    lenght_args = len(args)
         
     return count, lenght_args
 
