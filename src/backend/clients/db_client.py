@@ -29,14 +29,14 @@ class DbClient:
                 }
                 allure.attach(
                     json.dumps(error_details, indent=2),
-                    "❌ Ошибка подключения к БД",
+                    "Ошибка подключения к БД",
                     allure.attachment_type.JSON,
                 )
                 raise
 
-    @allure.step("🗄️ Выполнение SQL запроса: {query}")
+    @allure.step("Выполнение SQL запроса: {query}")
     def execute(self, query: str) -> None:
-        with allure.step(f"📝 Выполнение SQL: {query}"):
+        with allure.step(f"Выполнение SQL: {query}"):
             try:
                 allure.attach(query, "SQL запрос", allure.attachment_type.TEXT)
                 cur = self.conn.cursor()
@@ -62,13 +62,13 @@ class DbClient:
                 }
                 allure.attach(
                     json.dumps(error_details, indent=2),
-                    "❌ Ошибка выполнения SQL",
+                    "Ошибка выполнения SQL",
                     allure.attachment_type.JSON,
                 )
                 self.conn.rollback()
                 raise
 
-    @allure.step("🧹 Удаление пользователя и связанных данных")
+    @allure.step("Удаление пользователя и связанных данных")
     def delete_user(self, username: str) -> None:
         with allure.step(f"Удаление пользователя: {username}"):
             cart_items_query = f"""
@@ -95,9 +95,9 @@ class DbClient:
             user_query = f"DELETE FROM users WHERE username = '{username}'"
             self.execute(user_query)
 
-    @allure.step("🧹 Очистка корзины пользователя")
+    @allure.step("Очистка корзины пользователя")
     def delete_cart(self, username: str) -> None:
-        with allure.step(f"🛒 Очистка корзины пользователя: {username}"):
+        with allure.step(f"Очистка корзины пользователя: {username}"):
             cart_items_query = f"""
             DELETE FROM cart_items
             WHERE cart_id IN (
