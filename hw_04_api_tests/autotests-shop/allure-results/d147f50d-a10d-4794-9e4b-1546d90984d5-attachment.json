@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "N",
+    "lowercase": "k",
+    "random_chars": "Ccf4O",
+    "special_char": "$"
+  },
+  "total_length": 8,
+  "result": "NkCcf4O$"
+}

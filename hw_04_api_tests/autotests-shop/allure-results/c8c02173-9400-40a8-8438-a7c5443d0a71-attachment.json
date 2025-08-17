@@ -1,0 +1,15 @@
+{
+  "created_at": "2025-08-12 12:14:04.665808",
+  "items": [
+    {
+      "brand": "Apple",
+      "description": "Memory: 128GB. Screen: 6.1 inch. Color: Pink.",
+      "item_id": 1,
+      "name": "Iphone15 128GB",
+      "price": 99999,
+      "quantity": 1
+    }
+  ],
+  "order_id": 23,
+  "total_price": 99999
+}

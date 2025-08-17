@@ -1,0 +1,12 @@
+{
+  "method": "GET",
+  "url": "http://localhost:5050/catalog/?min_price=100&max_price=500",
+  "headers": {
+    "User-Agent": "python-requests/2.32.3",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept": "*/*",
+    "Connection": "keep-alive",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NzcsImV4cCI6MTc1NTE3MDM3MH0.64GciCYNetf51lNMkgduvEVjOHZ6Bpm4BpHYiFfjBUk"
+  },
+  "body": null
+}

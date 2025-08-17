@@ -1,0 +1,5 @@
+{
+  "catalog_adapter": "<src.backend.services.catalog.adapter.CatalogAdapter object at 0x102dea360>",
+  "token_type": "JWT",
+  "token_length": 131
+}

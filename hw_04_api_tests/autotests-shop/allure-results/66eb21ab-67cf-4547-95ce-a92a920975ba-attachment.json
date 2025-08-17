@@ -1,0 +1,9 @@
+{
+  "brand": "Apple",
+  "category": "Electronics",
+  "description": "Memory: 128GB. Screen: 6.1 inch. Color: Pink.",
+  "id": 1,
+  "image_url": "/images/iphone15pink.png",
+  "name": "Iphone15 128GB",
+  "price": 99999
+}

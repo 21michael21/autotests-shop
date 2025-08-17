@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "J",
+    "lowercase": "z",
+    "random_chars": "hUWSY",
+    "special_char": "&"
+  },
+  "total_length": 8,
+  "result": "JzhUWSY&"
+}

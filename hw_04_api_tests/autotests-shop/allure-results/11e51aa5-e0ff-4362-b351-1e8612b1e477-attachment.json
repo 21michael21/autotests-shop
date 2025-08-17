@@ -1,0 +1,12 @@
+{
+  "item_id": {
+    "value": 24,
+    "type": "int",
+    "is_valid": true
+  },
+  "quantity": {
+    "value": 1,
+    "type": "int",
+    "is_valid": true
+  }
+}

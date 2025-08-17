@@ -1,0 +1,6 @@
+{
+  "actual": 200,
+  "expected": 200,
+  "type_actual": "<class 'int'>",
+  "type_expected": "<enum 'HTTPStatus'>"
+}

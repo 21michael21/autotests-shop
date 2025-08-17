@@ -1,0 +1,14 @@
+{
+  "method": "POST",
+  "url": "http://localhost:5050/cart/remove",
+  "headers": {
+    "User-Agent": "python-requests/2.32.3",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept": "*/*",
+    "Connection": "keep-alive",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NzQsImV4cCI6MTc1NTE3MDM2OX0.wZReHSAhd0UHUG6xWXMTXCfjP6-xPfsawoPDhZGSQ-w",
+    "Content-Length": "15",
+    "Content-Type": "application/json"
+  },
+  "body": "{\"item_id\": 34}"
+}

@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "D",
+    "lowercase": "a",
+    "random_chars": "bQtmg",
+    "special_char": "&"
+  },
+  "total_length": 8,
+  "result": "DabQtmg&"
+}

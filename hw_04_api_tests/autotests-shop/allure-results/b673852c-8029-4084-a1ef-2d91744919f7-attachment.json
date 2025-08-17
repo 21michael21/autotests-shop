@@ -1,0 +1,10 @@
+{
+  "password": "HsJPGJx!",
+  "criteria": {
+    "min_length_8": true,
+    "has_uppercase": true,
+    "has_lowercase": true,
+    "has_special_char": true
+  },
+  "is_valid": true
+}

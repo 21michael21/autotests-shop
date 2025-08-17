@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "S",
+    "lowercase": "g",
+    "random_chars": "mPC2P",
+    "special_char": "#"
+  },
+  "total_length": 8,
+  "result": "SgmPC2P#"
+}

@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "C",
+    "lowercase": "l",
+    "random_chars": "vGNc3",
+    "special_char": "@"
+  },
+  "total_length": 8,
+  "result": "ClvGNc3@"
+}

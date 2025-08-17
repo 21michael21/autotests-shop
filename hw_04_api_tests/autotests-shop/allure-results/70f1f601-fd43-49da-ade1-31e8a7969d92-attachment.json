@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "X",
+    "lowercase": "m",
+    "random_chars": "7fZae",
+    "special_char": "^"
+  },
+  "total_length": 8,
+  "result": "Xm7fZae^"
+}

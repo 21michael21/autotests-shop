@@ -1,0 +1,12 @@
+{
+  "method": "GET",
+  "url": "http://localhost:5050/catalog/",
+  "headers": {
+    "User-Agent": "python-requests/2.32.3",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept": "*/*",
+    "Connection": "keep-alive",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NzYsImV4cCI6MTc1NTE3MDM3MH0.g1MgETjGbR7KtdSnPzP9oB-Fcppc-unkgbidYW6if24"
+  },
+  "body": null
+}

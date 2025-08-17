@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "H",
+    "lowercase": "k",
+    "random_chars": "adfSS",
+    "special_char": "*"
+  },
+  "total_length": 8,
+  "result": "HkadfSS*"
+}

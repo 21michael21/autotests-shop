@@ -1,0 +1,12 @@
+{
+  "item_id": {
+    "value": 4,
+    "type": "int",
+    "is_valid": true
+  },
+  "quantity": {
+    "value": 4,
+    "type": "int",
+    "is_valid": true
+  }
+}

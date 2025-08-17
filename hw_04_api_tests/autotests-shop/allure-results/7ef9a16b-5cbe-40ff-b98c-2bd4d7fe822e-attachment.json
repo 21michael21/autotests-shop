@@ -1,0 +1,11 @@
+{
+  "method": "POST",
+  "url": "http://localhost:5050/auth/login",
+  "headers": {},
+  "base_url": "http://localhost:5050",
+  "route": "/auth/login",
+  "json_body": {
+    "username": "uzsOkMn2",
+    "password": "Nn4wXTu@"
+  }
+}

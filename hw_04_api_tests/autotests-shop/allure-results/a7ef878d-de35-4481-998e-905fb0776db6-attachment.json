@@ -1,0 +1,13 @@
+{
+  "method": "POST",
+  "url": "http://localhost:5050/cart/add",
+  "headers": {
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NzUsImV4cCI6MTc1NTE3MDM2OX0.ukEdvOt-AxAvU5oITXlTdvivSp6cXzkzfsYDwwxDMsY"
+  },
+  "base_url": "http://localhost:5050",
+  "route": "/cart/add",
+  "json_body": {
+    "item_id": 99999,
+    "quantity": 1
+  }
+}

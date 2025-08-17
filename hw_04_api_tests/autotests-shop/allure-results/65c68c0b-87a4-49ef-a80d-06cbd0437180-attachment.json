@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "D",
+    "lowercase": "k",
+    "random_chars": "L99Po",
+    "special_char": "!"
+  },
+  "total_length": 8,
+  "result": "DkL99Po!"
+}

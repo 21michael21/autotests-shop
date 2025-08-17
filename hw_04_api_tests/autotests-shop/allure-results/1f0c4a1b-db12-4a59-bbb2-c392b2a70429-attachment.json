@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "N",
+    "lowercase": "o",
+    "random_chars": "rNcFB",
+    "special_char": "#"
+  },
+  "total_length": 8,
+  "result": "NorNcFB#"
+}

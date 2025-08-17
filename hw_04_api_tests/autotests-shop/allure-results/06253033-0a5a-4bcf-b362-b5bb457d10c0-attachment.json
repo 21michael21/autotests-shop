@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "A",
+    "lowercase": "v",
+    "random_chars": "edq8Y",
+    "special_char": "$"
+  },
+  "total_length": 8,
+  "result": "Avedq8Y$"
+}

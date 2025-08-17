@@ -1,0 +1,10 @@
+{
+  "method": "POST",
+  "url": "http://localhost:5050/orders/",
+  "headers": {
+    "Authorization": "Bearer invalid_token"
+  },
+  "base_url": "http://localhost:5050",
+  "route": "/orders/",
+  "json_body": null
+}

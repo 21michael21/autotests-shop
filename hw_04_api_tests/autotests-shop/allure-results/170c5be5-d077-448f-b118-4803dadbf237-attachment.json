@@ -1,0 +1,9 @@
+{
+  "password": "Yp7iH0s#",
+  "length": 8,
+  "min_length_required": 8,
+  "has_uppercase": true,
+  "has_lowercase": true,
+  "has_special_char": true,
+  "is_valid": true
+}

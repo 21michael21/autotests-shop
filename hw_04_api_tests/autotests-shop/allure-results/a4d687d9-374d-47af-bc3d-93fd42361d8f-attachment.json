@@ -1,0 +1,11 @@
+{
+  "method": "POST",
+  "url": "http://localhost:5050/auth/register",
+  "headers": {},
+  "base_url": "http://localhost:5050",
+  "route": "/auth/register",
+  "json_body": {
+    "username": "8fkGFKLJ",
+    "password": "Avedq8Y$"
+  }
+}

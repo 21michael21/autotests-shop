@@ -1,0 +1,11 @@
+{
+  "method": "component_based",
+  "components": {
+    "uppercase": "E",
+    "lowercase": "z",
+    "random_chars": "wZs2q",
+    "special_char": "^"
+  },
+  "total_length": 8,
+  "result": "EzwZs2q^"
+}

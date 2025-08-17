@@ -1,0 +1,14 @@
+{
+  "method": "POST",
+  "url": "http://localhost:5050/cart/add",
+  "headers": {
+    "User-Agent": "python-requests/2.32.3",
+    "Accept-Encoding": "gzip, deflate",
+    "Accept": "*/*",
+    "Connection": "keep-alive",
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NTksImV4cCI6MTc1NTA4NzIzOX0.m_uG-8FovjjC9uyigQJnyYQmTt_RHC2Wxx7OEnbmP0s",
+    "Content-Length": "30",
+    "Content-Type": "application/json"
+  },
+  "body": "{\"item_id\": 24, \"quantity\": 1}"
+}

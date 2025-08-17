@@ -1,0 +1,10 @@
+{
+  "method": "GET",
+  "url": "http://localhost:5050/orders/999999",
+  "headers": {
+    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0NjgsImV4cCI6MTc1NTA4NzI0NX0.cmZC_uaG2hSWHdOKieGxALU3v4x80TzsfxOPvh1WOyQ"
+  },
+  "base_url": "http://localhost:5050",
+  "route": "/orders/999999",
+  "query_params": null
+}
