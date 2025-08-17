@@ -7,14 +7,12 @@ class AuthAdapter:
     def __init__(self, client: HTTPClient) -> None:
         self.client = client
 
-    # Low-level methods used elsewhere
     def register(self, data: Dict) -> requests.Response:
-        return self.client.post('/auth/register', json=data)
+        return self.client.post("/auth/register", json=data)
 
     def login(self, data: Dict) -> requests.Response:
-        return self.client.post('/auth/login', json=data)
+        return self.client.post("/auth/login", json=data)
 
-    # Convenience methods expected by tests
     def register_user(self, username: str, password: str) -> requests.Response:
         return self.register({"username": username, "password": password})
 
