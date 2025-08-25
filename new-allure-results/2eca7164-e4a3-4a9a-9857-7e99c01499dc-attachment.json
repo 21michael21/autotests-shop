@@ -1,0 +1,9 @@
+{
+    "URL": "http://localhost:5050/cart/",
+    "HEADERS": "{'Server': 'Werkzeug/3.1.3 Python/3.10.18', 'Date': 'Mon, 25 Aug 2025 19:35:22 GMT', 'Content-Type': 'application/json', 'Content-Length': '220', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'}",
+    "BODY": "{\"items\": [{\"brand\": \"Samsung\", \"description\": \"Storage: 128GB. RAM: 12GB. Screen: 6.5 inch. Color: Blue.\", \"image_url\": \"/images/samsung.png\", \"item_id\": 22, \"name\": \"Galaxy Ultra 24 128GB 12GB RAM\", \"price\": 94999, \"quantity\": 1}]}",
+    "STATUS-CODE": "200",
+    "REQUEST-TIME": "2025-08-25 22:35:22.997458",
+    "RESPONSE-TIME": "2025-08-25 22:35:23.010525",
+    "PROCESSING-DURATION": "0.01 milliseconds"
+}

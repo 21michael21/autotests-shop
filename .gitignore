@@ -124,6 +124,14 @@ celerybeat.pid
 .venv
 env/
 venv/
+.venv/
+__pycache__/
+*.pyc
+allure-results/
+.idea/
+.DS_Store
+.env
+.env.*
 ENV/
 env.bak/
 venv.bak/

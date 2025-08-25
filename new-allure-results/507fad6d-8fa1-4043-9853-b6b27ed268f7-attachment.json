@@ -1,0 +1,5 @@
+{
+    "URL": "http://localhost:5050/orders/58",
+    "HEADERS": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4MjgsImV4cCI6MTc1NjIzNjk0M30.OQwuUkUv7hQsTY9lsrUXRB66l6Xvdtxx5bxAF3MDksU'}",
+    "BODY": null
+}

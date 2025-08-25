@@ -45,14 +45,29 @@ Authorization: Bearer <token>
 
 Описание: API принимает невалидные параметры фильтрации (отрицательные цены, неверные типы данных) без должной обработки.
 
+#### 3.1. Отрицательные цены принимаются как валидные
+
 Воспроизведение:
 ```bash
-GET /catalog/?min_price=-100&max_price=invalid
+GET /catalog/?min_price=-100
 Authorization: Bearer <token>
 ```
 
 Ожидаемый результат: HTTP 400 Bad Request с описанием ошибки валидации
-Фактический результат: HTTP 200 OK или 500 Internal Server Error
+Фактический результат: HTTP 200 OK (API принимает отрицательные цены как валидные)
+
+**Критичность**: Высокая - это может привести к логическим ошибкам в бизнес-логике
+
+#### 3.2. Неверные типы данных для параметров
+
+Воспроизведение:
+```bash
+GET /catalog/?max_price=invalid
+Authorization: Bearer <token>
+```
+
+Ожидаемый результат: HTTP 400 Bad Request с описанием ошибки валидации
+Фактический результат: HTTP 500 Internal Server Error
 
 Файл теста: `tests/backend/catalog/test_product_catalog.py::test_invalid_filter_params`
 

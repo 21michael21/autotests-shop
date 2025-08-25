@@ -11,60 +11,78 @@ pytestmark = [
 
 
 @allure.title("Получение каталога товаров")
-@allure.severity(allure.severity_level.CRITICAL)
-def test_get_catalog(catalog_adapter, user):
-    with allure.step("Получение каталога"):
-        resp = catalog_adapter.get_catalog(user["token"])
-        allure.attach(str(resp.json()), "Ответ API", allure.attachment_type.JSON)
-    validate_response(resp, http.HTTPStatus.OK)
-    validate_catalog_response(resp.json())
+def test_get_catalog(shop_service, user):
+    resp = shop_service.get_catalog(user["token"])
+    validate_catalog_response(resp.model_dump()["items"])
 
 
 @allure.title("Фильтрация товаров по цене")
-@allure.severity(allure.severity_level.NORMAL)
-def test_filter_by_price(catalog_adapter, user):
-    with allure.step("Фильтрация по цене"):
-        resp = catalog_adapter.get_catalog(user["token"], min_price=100, max_price=500)
-        allure.attach(str(resp.json()), "Ответ API", allure.attachment_type.JSON)
-    validate_response(resp, http.HTTPStatus.OK)
-    response_data = resp.json()
-    validate_catalog_response(response_data, min_items=0)
-
-    if response_data:
-        for item in response_data:
-            assert (
-                100 <= item["price"] <= 500
-            ), f'Цена товара {item["id"]} не в диапазоне 100-500'
-    else:
-        allure.attach(
-            "Фильтр вернул пустой список - нет товаров в диапазоне 100-500",
-            "Информация",
-            allure.attachment_type.TEXT,
-        )
+def test_filter_by_price(shop_service, user):
+    resp = shop_service.get_catalog(user["token"], min_price=100, max_price=500)
+    items = resp.model_dump()["items"]
+    validate_catalog_response(items, min_items=0)
+    
+    for item in items:
+        assert 100 <= item["price"] <= 500, f'Цена товара {item["id"]} не в диапазоне 100-500'
 
 
 @allure.title("Сортировка товаров по цене")
-@allure.severity(allure.severity_level.NORMAL)
-def test_sort_by_price(catalog_adapter, user):
-    with allure.step("Сортировка по цене"):
-        resp = catalog_adapter.get_catalog(
-            user["token"], sort_by="price", sort_order="asc"
-        )
-        allure.attach(str(resp.json()), "Ответ API", allure.attachment_type.JSON)
-    validate_response(resp, http.HTTPStatus.OK)
-    response_data = resp.json()
-    validate_catalog_response(response_data)
-
-    prices = [item["price"] for item in response_data if "price" in item]
+def test_sort_by_price(shop_service, user):
+    resp = shop_service.get_catalog(user["token"], sort_by="price", sort_order="asc")
+    items = resp.model_dump()["items"]
+    validate_catalog_response(items)
+    
+    prices = [item["price"] for item in items]
     assert prices == sorted(prices), "Товары не отсортированы по возрастанию цены"
 
 
 @allure.title("Попытка фильтрации с невалидными параметрами")
-@allure.severity(allure.severity_level.NORMAL)
-def test_invalid_filter_params(catalog_adapter, user):
-    with allure.step("Фильтрация с невалидными параметрами"):
-        resp = catalog_adapter.get_catalog(
-            user["token"], min_price=-100, max_price="invalid"
-        )
-        allure.attach(resp.text, "Ответ API", allure.attachment_type.TEXT)
-    assert resp.status_code in [200, 400, 500]
+def test_invalid_filter_params(shop_service, user):
+
+    from src.backend.services.shop.adapter import ShopAdapter
+    from src.backend.clients.http_client.client import HTTPClient
+    import os
+    
+    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
+    http_client = HTTPClient(base_url)
+    adapter = ShopAdapter(http_client)
+    
+    resp = adapter.get_catalog(user["token"], min_price=-100)
+    if resp.status_code == 200:
+        pytest.fail("БАГ: API принимает отрицательные цены и возвращает 200, ожидался 400 Bad Request")
+    assert resp.status_code == 400, f"Ожидался 400 для отрицательной цены, получен {resp.status_code}"
+    
+    resp = adapter.get_catalog(user["token"], max_price="invalid")
+    if resp.status_code == 500:
+        pytest.skip("Сервис возвращает 500 вместо 400 для невалидного типа — это баг, требуется завести баг-репорт")
+    assert resp.status_code == 400, f"Ожидался 400 для невалидного типа, получен {resp.status_code}"
+
+
+@allure.title("Фильтрация по бренду")
+def test_filter_by_brand(shop_service, user):
+    catalog = shop_service.get_catalog(user["token"])
+    if catalog.items:
+        brand = catalog.items[0].brand
+        resp = shop_service.get_catalog(user["token"], brand=brand)
+        filtered_items = resp.model_dump()["items"]
+        
+        for item in filtered_items:
+            assert item["brand"].lower() == brand.lower(), f"Товар {item['id']} имеет бренд {item['brand']}, ожидался {brand}"
+
+
+@allure.title("Проверка структуры товара")
+def test_item_structure(shop_service, user):
+    resp = shop_service.get_catalog(user["token"])
+    items = resp.model_dump()["items"]
+    
+    if items:
+        item = items[0]
+        required_fields = ["id", "name", "brand", "price"]
+        for field in required_fields:
+            assert field in item, f"Товар должен содержать поле {field}"
+        
+        assert isinstance(item["id"], int), "ID товара должен быть числом"
+        assert isinstance(item["name"], str), "Название товара должно быть строкой"
+        assert isinstance(item["brand"], str), "Бренд товара должен быть строкой"
+        assert isinstance(item["price"], (int, float)), "Цена товара должна быть положительной"
+        assert item["price"] > 0, "Цена товара должна быть положительной"

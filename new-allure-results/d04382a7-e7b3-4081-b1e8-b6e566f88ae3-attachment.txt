@@ -1,0 +1,1 @@
+curl -H 'User-Agent: python-requests/2.32.5' -H 'Accept-Encoding: gzip, deflate' -H 'Accept: */*' -H 'Connection: keep-alive' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4MjQsImV4cCI6MTc1NjIzNjkzOX0.ug_W-poNir66UjRn30OOL4eo2oUk0S8kON86gFZwUPc' http://localhost:5050/orders/57

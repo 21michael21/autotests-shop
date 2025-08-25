@@ -1,0 +1,9 @@
+{
+    "URL": "http://localhost:5050/auth/login",
+    "HEADERS": "{'Server': 'Werkzeug/3.1.3 Python/3.10.18', 'Date': 'Mon, 25 Aug 2025 19:35:26 GMT', 'Content-Type': 'application/json', 'Content-Length': '137', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'}",
+    "BODY": "{\"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4MTIsImV4cCI6MTc1NjIzNjkyNn0.9AcAJeLrcKhMdajfKoU_z8MaBGBVSsJwVAYg0wR2_pI\"}",
+    "STATUS-CODE": "200",
+    "REQUEST-TIME": "2025-08-25 22:35:25.318306",
+    "RESPONSE-TIME": "2025-08-25 22:35:26.298303",
+    "PROCESSING-DURATION": "0.98 milliseconds"
+}
