@@ -1,10 +1,14 @@
+import http
+import os
+
 import allure
 import pytest
-import http
-from src.utils.validations import validate_response, validate_order_response
-from src.backend.services.shop.adapter import ShopAdapter
+
 from src.backend.clients.http_client.client import HTTPClient
-import os
+from src.backend.services.shop.adapter import ShopAdapter
+from src.builders.user_builder import UserBuilder
+from src.utils.validations import validate_response, validate_order_response
+from tests.backend.conftest import create_test_adapter
 
 pytestmark = [
     allure.epic("Система управления заказами"),
@@ -30,9 +34,7 @@ def test_get_order_details(shop_service, user, created_order_id):
 @allure.title("Попытка получения несуществующего заказа")
 def test_get_nonexistent_order(shop_service, user):
 
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
+    adapter = create_test_adapter()
 
     nonexistent_order_id = 9999999999999999999999999
     resp = adapter.get_order_details(user["token"], nonexistent_order_id)
@@ -41,13 +43,7 @@ def test_get_nonexistent_order(shop_service, user):
 
 @allure.title("Попытка создания заказа без авторизации")
 def test_create_order_unauthorized(shop_service):
-    from src.backend.services.shop.adapter import ShopAdapter
-    from src.backend.clients.http_client.client import HTTPClient
-    import os
-
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
+    adapter = create_test_adapter()
 
     invalid_token = "Bearer invalid_token"
     resp = adapter.create_order(invalid_token)
@@ -64,13 +60,7 @@ def test_create_order_empty_cart(shop_service, user):
     except Exception:
         pass
 
-    from src.backend.services.shop.adapter import ShopAdapter
-    from src.backend.clients.http_client.client import HTTPClient
-    import os
-
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
+    adapter = create_test_adapter()
 
     resp = adapter.create_order(user["token"])
     validate_response(resp, http.HTTPStatus.BAD_REQUEST)
@@ -85,13 +75,7 @@ def test_get_other_user_order(shop_service, user, created_order_id):
     login_resp = shop_service.login_user(new_user["username"], new_user["password"])
     second_user_token = login_resp.token
 
-    from src.backend.services.shop.adapter import ShopAdapter
-    from src.backend.clients.http_client.client import HTTPClient
-    import os
-
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
+    adapter = create_test_adapter()
 
     resp = adapter.get_order_details(second_user_token, created_order_id)
     validate_response(resp, http.HTTPStatus.NOT_FOUND)

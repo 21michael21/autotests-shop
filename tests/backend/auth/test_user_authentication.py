@@ -1,12 +1,16 @@
 import http
+import os
 
 import allure
 import pytest
 
+from src.backend.clients.http_client.client import HTTPClient
+from src.backend.services.shop.adapter import ShopAdapter
 from src.builders.user_builder import UserBuilder
+from src.utils.allure_utils import attach_response_data, attach_error_details
 from src.utils.constants import AUTH_MESSAGES
 from src.utils.validations import validate_response
-from src.utils.allure_utils import attach_response_data, attach_error_details
+from tests.backend.conftest import create_test_adapter
 
 
 @allure.title("Регистрация нового пользователя")
@@ -40,13 +44,7 @@ def test_login_invalid_credentials(
     if password == "correct_password":
         password = user["password"]
 
-    from src.backend.services.shop.adapter import ShopAdapter
-    from src.backend.clients.http_client.client import HTTPClient
-    import os
-
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
+    adapter = create_test_adapter()
 
     resp = adapter.login_user(username, password)
     validate_response(resp, expected_status)
@@ -54,18 +52,11 @@ def test_login_invalid_credentials(
 
 @allure.title("Попытка регистрации с существующим username")
 def test_duplicate_username_registration(shop_service, user):
-    from src.backend.services.shop.adapter import ShopAdapter
-    from src.backend.clients.http_client.client import HTTPClient
-    import os
-
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
+    adapter = create_test_adapter()
 
     resp = adapter.register_user(user["username"], "newpassword123")
     validate_response(resp, http.HTTPStatus.BAD_REQUEST)
     
-    # Проверяем конкретный результат - либо пользователь уже существует, либо неверный пароль
     message = resp.json().get("message", "")
     assert message in ["User already exists", "Password does not match the criteria"], \
         f"Неожиданное сообщение: {message}"
@@ -84,18 +75,11 @@ def test_duplicate_username_registration(shop_service, user):
     ],
 )
 def test_invalid_username_registration(shop_service, username, expected_status):
-    from src.backend.services.shop.adapter import ShopAdapter
-    from src.backend.clients.http_client.client import HTTPClient
-    import os
-
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
+    adapter = create_test_adapter()
 
     resp = adapter.register_user(username, "ValidPass123!")
     validate_response(resp, expected_status)
     
-    # Проверяем конкретный результат - API может вернуть разные сообщения
     message = resp.json().get("message", "")
     valid_messages = [
         "Username does not match the criteria",
@@ -131,7 +115,6 @@ def test_invalid_password_registration(shop_service, password, expected_status):
     resp = adapter.register_user("validuser123", password)
     validate_response(resp, expected_status)
     
-    # Проверяем конкретный результат - API может вернуть разные сообщения
     message = resp.json().get("message", "")
     valid_messages = [
         "Password does not match the criteria",
@@ -155,7 +138,6 @@ def test_login_without_authorization(shop_service):
     adapter = ShopAdapter(http_client)
 
     resp = adapter.login_user("", "")
-    # API возвращает 401 для пустых данных - это корректно
     validate_response(resp, http.HTTPStatus.UNAUTHORIZED)
     
     attach_response_data(resp.json(), "Ответ при попытке входа без данных")
@@ -165,12 +147,10 @@ def test_login_without_authorization(shop_service):
 def test_jwt_token_structure(shop_service, user):
     resp = shop_service.login_user(user["username"], user["password"])
     
-    # Проверяем конкретную структуру токена
     assert hasattr(resp, 'token'), "Ответ должен содержать поле token"
     assert isinstance(resp.token, str), "Токен должен быть строкой"
     assert len(resp.token) > 0, "Токен не должен быть пустым"
     
-    # Проверяем формат JWT токена (3 части, разделенные точками)
     token_parts = resp.token.split('.')
     assert len(token_parts) == 3, "JWT токен должен содержать 3 части"
     

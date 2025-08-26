@@ -14,6 +14,12 @@ from src.backend.services.shop.service import ShopService
 from src.utils.allure_utils import attach_test_data, attach_response_data, attach_error_details
 
 
+def create_test_adapter():
+    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
+    http_client = HTTPClient(base_url)
+    return ShopAdapter(http_client)
+
+
 @pytest.fixture
 def http_client():
     base_url = os.getenv("API_BASE_URL", "http://localhost:5050")

@@ -48,10 +48,8 @@ def test_remove_item_from_cart(shop_service, add_random_item, user):
 def test_add_invalid_item(shop_service, user):
     try:
         resp = shop_service.add_item_to_cart(user["token"], 99999, 1)
-        # Если API принял несуществующий товар - это баг
         pytest.fail("БАГ: API принимает несуществующий товар и возвращает успешный ответ, ожидался 400 Bad Request")
     except Exception as e:
-        # API корректно обработал ошибку
         attach_response_data({"error": str(e)}, "Ответ при попытке добавить несуществующий товар")
 
 
@@ -66,12 +64,9 @@ def test_add_invalid_item(shop_service, user):
 def test_add_item_invalid_quantity(shop_service, random_item, user, quantity, expected_status):
     resp = shop_service.add_item_to_cart(user["token"], random_item["item_id"], quantity)
     
-    # shop_service возвращает dict, проверяем наличие сообщения об ошибке
     if "message" in resp and "error" in resp["message"].lower():
-        # API корректно обработал ошибку
         attach_response_data(resp, f"Ответ при попытке добавить товар с количеством {quantity}")
     else:
-        # API принял некорректное значение - это баг
         pytest.skip(f"БАГ: API принимает некорректное количество {quantity} и возвращает успешный ответ")
     
     attach_response_data(resp, f"Ответ при попытке добавить товар с количеством {quantity}")
@@ -81,12 +76,9 @@ def test_add_item_invalid_quantity(shop_service, random_item, user, quantity, ex
 def test_remove_nonexistent_item(shop_service, user):
     resp = shop_service.remove_item_from_cart(user["token"], 99999)
     
-    # shop_service возвращает dict, проверяем наличие сообщения об ошибке
     if "message" in resp and "error" in resp["message"].lower():
-        # API корректно обработал ошибку
         attach_response_data(resp, "Ответ при попытке удалить несуществующий товар")
     else:
-        # API не обработал ошибку - это баг
         pytest.skip("БАГ: API возвращает успешный ответ при удалении несуществующего товара")
     
     attach_response_data(resp, "Ответ при попытке удалить несуществующий товар")
