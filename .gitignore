@@ -50,6 +50,11 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
 
 # Translations
 *.mo
@@ -127,7 +132,6 @@ venv/
 .venv/
 __pycache__/
 *.pyc
-allure-results/
 .idea/
 .DS_Store
 .env
@@ -135,6 +139,38 @@ allure-results/
 ENV/
 env.bak/
 venv.bak/
+
+# Allure и тестовые артефакты - все возможные варианты
+allure-results/
+allure-report/
+allure-results-*/
+allure-report-*/
+new-allure-results/
+new-allure-report/
+final-allure-results/
+final-allure-report/
+*allure-results*/
+*allure-report*/
+test-results/
+test-output/
+reports/
+*.xml
+*.json
+*.html
+*.css
+*.js
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.pdf
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
 
 # Spyder project settings
 .spyderproject
@@ -169,9 +205,7 @@ cython_debug/
 # VS Code
 .vscode/
 
-# Allure results
-allure-results/
-allure-report/
+
 
 # OS generated files
 .DS_Store
@@ -188,6 +222,14 @@ Thumbs.db
 *.swy
 *.swp
 *~
+*.bak
+*.backup
+*.old
+*.orig
+.cache/
+*.pyc
+*.pyo
+*.pyd
 
 # Database files
 *.db
