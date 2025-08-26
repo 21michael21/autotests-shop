@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "http://localhost:5050/catalog/",
+  "headers": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMzLCJleHAiOjE3NTYyODI3OTJ9.Qu2J2HcFTxNuHzRtJ_HaasJPIrdk5DZ1-cU1St2A6uo'}",
+  "params": null,
+  "data": "curl -H 'User-Agent: python-requests/2.32.5' -H 'Accept-Encoding: gzip, deflate' -H 'Accept: */*' -H 'Connection: keep-alive' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMzLCJleHAiOjE3NTYyODI3OTJ9.Qu2J2HcFTxNuHzRtJ_HaasJPIrdk5DZ1-cU1St2A6uo' http://localhost:5050/catalog/"
+}

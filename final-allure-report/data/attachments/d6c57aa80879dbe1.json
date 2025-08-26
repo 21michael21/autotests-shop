@@ -1,0 +1,5 @@
+{
+  "URL": "http://localhost:5050/cart/remove",
+  "HEADERS": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTIyLCJleHAiOjE3NTYyODI3ODF9.TiB-4V86dMT3saYmvTLWwSDtYEQI2a3a3DQKMBWk1dc', 'Content-Length': '15', 'Content-Type': 'application/json'}",
+  "BODY": "{\"item_id\": 45}"
+}

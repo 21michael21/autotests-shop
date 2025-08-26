@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "http://localhost:5050/cart/",
+  "headers": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTM5LCJleHAiOjE3NTYyODI3OTd9.biADsd3Y8xGl-m8Hi35pkca_sXhCRdW2sZcsDHRCiU0'}",
+  "params": null,
+  "data": "curl -H 'User-Agent: python-requests/2.32.5' -H 'Accept-Encoding: gzip, deflate' -H 'Accept: */*' -H 'Connection: keep-alive' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTM5LCJleHAiOjE3NTYyODI3OTd9.biADsd3Y8xGl-m8Hi35pkca_sXhCRdW2sZcsDHRCiU0' http://localhost:5050/cart/"
+}

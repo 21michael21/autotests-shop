@@ -1,0 +1,5 @@
+{
+    "URL": "http://localhost:5050/auth/login",
+    "HEADERS": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '50', 'Content-Type': 'application/json'}",
+    "BODY": "{\"username\": \"userZEvrx2\", \"password\": \"Hv8)CYwA\"}"
+}

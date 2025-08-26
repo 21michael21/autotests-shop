@@ -1,0 +1,7 @@
+{
+  "method": "GET",
+  "url": "http://localhost:5050/catalog/?brand=Apple",
+  "headers": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMxLCJleHAiOjE3NTYyODI3OTB9.Z5dzXocrAhv5qIzhhqSUTobzTkFB2en4Rsi3WNmaptw'}",
+  "params": null,
+  "data": "curl -H 'User-Agent: python-requests/2.32.5' -H 'Accept-Encoding: gzip, deflate' -H 'Accept: */*' -H 'Connection: keep-alive' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMxLCJleHAiOjE3NTYyODI3OTB9.Z5dzXocrAhv5qIzhhqSUTobzTkFB2en4Rsi3WNmaptw' 'http://localhost:5050/catalog/?brand=Apple'"
+}

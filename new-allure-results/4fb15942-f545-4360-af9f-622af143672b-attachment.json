@@ -1,0 +1,5 @@
+{
+    "URL": "http://localhost:5050/catalog/?min_price=100&max_price=500",
+    "HEADERS": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4MTgsImV4cCI6MTc1NjIzNjkzMn0.aM0GMzACcs7fx1iLumHeZDbYI7YQSSH0bA3OKSEbOBw'}",
+    "BODY": null
+}

@@ -1,0 +1,7 @@
+{
+  "method": "POST",
+  "url": "http://localhost:5050/orders/",
+  "headers": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMzLCJleHAiOjE3NTYyODI3OTJ9.Qu2J2HcFTxNuHzRtJ_HaasJPIrdk5DZ1-cU1St2A6uo', 'Content-Length': '0'}",
+  "params": null,
+  "data": "curl -X POST -H 'User-Agent: python-requests/2.32.5' -H 'Accept-Encoding: gzip, deflate' -H 'Accept: */*' -H 'Connection: keep-alive' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMzLCJleHAiOjE3NTYyODI3OTJ9.Qu2J2HcFTxNuHzRtJ_HaasJPIrdk5DZ1-cU1St2A6uo' -H 'Content-Length: 0' http://localhost:5050/orders/"
+}

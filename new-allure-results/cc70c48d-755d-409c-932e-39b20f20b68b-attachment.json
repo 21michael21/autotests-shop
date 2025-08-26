@@ -1,0 +1,5 @@
+{
+    "URL": "http://localhost:5050/catalog/",
+    "HEADERS": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo4MTUsImV4cCI6MTc1NjIzNjkyOX0.NtW4fHD6WX7Ch_KxEc5RIe0UWYj4GdeghIYZNq3eAlU'}",
+    "BODY": null
+}
