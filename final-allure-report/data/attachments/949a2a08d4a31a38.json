@@ -1,9 +1,0 @@
-{
-  "URL": "http://localhost:5050/auth/register",
-  "HEADERS": "{'Server': 'Werkzeug/3.1.3 Python/3.10.18', 'Date': 'Tue, 26 Aug 2025 08:19:58 GMT', 'Content-Type': 'application/json', 'Content-Length': '34', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'}",
-  "BODY": "{\"message\": \"User already exists\"}",
-  "STATUS-CODE": "400",
-  "REQUEST-TIME": "2025-08-26 11:19:58.415250",
-  "RESPONSE-TIME": "2025-08-26 11:19:58.420637",
-  "PROCESSING-DURATION": "0.01 milliseconds"
-}

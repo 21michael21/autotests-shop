@@ -1,7 +1,0 @@
-{
-  "method": "POST",
-  "url": "http://localhost:5050/auth/register",
-  "headers": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '54', 'Content-Type': 'application/json'}",
-  "params": null,
-  "data": "curl -H 'User-Agent: python-requests/2.32.5' -H 'Accept-Encoding: gzip, deflate' -H 'Accept: */*' -H 'Connection: keep-alive' -H 'Content-Length: 54' -H 'Content-Type: application/json' -d '{\"username\": \"user\\r123\", \"password\": \"ValidPass123!\"}' http://localhost:5050/auth/register"
-}

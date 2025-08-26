@@ -1,9 +1,0 @@
-{
-  "URL": "http://localhost:5050/cart/add",
-  "HEADERS": "{'Server': 'Werkzeug/3.1.3 Python/3.10.18', 'Date': 'Tue, 26 Aug 2025 08:19:57 GMT', 'Content-Type': 'application/json', 'Content-Length': '144', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'}",
-  "BODY": "{\"message\": \"Товар добавлен в корзину\"}",
-  "STATUS-CODE": "200",
-  "REQUEST-TIME": "2025-08-26 11:19:57.758188",
-  "RESPONSE-TIME": "2025-08-26 11:19:57.840811",
-  "PROCESSING-DURATION": "0.08 milliseconds"
-}

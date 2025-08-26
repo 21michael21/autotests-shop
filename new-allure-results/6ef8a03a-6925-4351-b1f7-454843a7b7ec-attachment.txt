@@ -1,1 +1,0 @@
-curl -H 'User-Agent: python-requests/2.32.5' -H 'Accept-Encoding: gzip, deflate' -H 'Accept: */*' -H 'Connection: keep-alive' -H 'Content-Length: 44' -H 'Content-Type: application/json' -d '{"username": "validuser123", "password": ""}' http://localhost:5050/auth/register

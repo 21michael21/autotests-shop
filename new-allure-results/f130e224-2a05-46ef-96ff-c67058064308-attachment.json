@@ -1,9 +1,0 @@
-{
-    "URL": "http://localhost:5050/cart/",
-    "HEADERS": "{'Server': 'Werkzeug/3.1.3 Python/3.10.18', 'Date': 'Mon, 25 Aug 2025 19:35:21 GMT', 'Content-Type': 'application/json', 'Content-Length': '198', 'Access-Control-Allow-Origin': '*', 'Connection': 'close'}",
-    "BODY": "{\"items\": [{\"brand\": \"Apple\", \"description\": \"Memory: 512GB. Screen: 6.1 inch. Color: White.\", \"image_url\": \"/images/iphone15white.png\", \"item_id\": 45, \"name\": \"Iphone14 512GB\", \"price\": 139999, \"quantity\": 1}]}",
-    "STATUS-CODE": "200",
-    "REQUEST-TIME": "2025-08-25 22:35:21.855748",
-    "RESPONSE-TIME": "2025-08-25 22:35:21.872390",
-    "PROCESSING-DURATION": "0.02 milliseconds"
-}

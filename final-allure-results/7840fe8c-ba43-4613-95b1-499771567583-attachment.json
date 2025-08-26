@@ -1,7 +1,0 @@
-{
-  "method": "POST",
-  "url": "http://localhost:5050/cart/remove",
-  "headers": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTI2LCJleHAiOjE3NTYyODI3ODV9.g90tvuJZAVk1HpsLFubngTHwEuavt_BaqIBiVgYOU6U', 'Content-Length': '18', 'Content-Type': 'application/json'}",
-  "params": null,
-  "data": "curl -H 'User-Agent: python-requests/2.32.5' -H 'Accept-Encoding: gzip, deflate' -H 'Accept: */*' -H 'Connection: keep-alive' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTI2LCJleHAiOjE3NTYyODI3ODV9.g90tvuJZAVk1HpsLFubngTHwEuavt_BaqIBiVgYOU6U' -H 'Content-Length: 18' -H 'Content-Type: application/json' -d '{\"item_id\": 99999}' http://localhost:5050/cart/remove"
-}

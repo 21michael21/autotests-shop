@@ -1,5 +1,0 @@
-{
-  "URL": "http://localhost:5050/cart/add",
-  "HEADERS": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMzLCJleHAiOjE3NTYyODI3OTJ9.Qu2J2HcFTxNuHzRtJ_HaasJPIrdk5DZ1-cU1St2A6uo', 'Content-Length': '30', 'Content-Type': 'application/json'}",
-  "BODY": "{\"item_id\": 39, \"quantity\": 2}"
-}

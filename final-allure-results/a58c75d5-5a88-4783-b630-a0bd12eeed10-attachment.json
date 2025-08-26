@@ -1,5 +1,0 @@
-{
-  "URL": "http://localhost:5050/catalog/?brand=Apple",
-  "HEADERS": "{'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMTMxLCJleHAiOjE3NTYyODI3OTB9.Z5dzXocrAhv5qIzhhqSUTobzTkFB2en4Rsi3WNmaptw'}",
-  "BODY": null
-}
