@@ -1,5 +1,4 @@
 import time
-from http import HTTPMethod
 from typing import Optional
 from urllib.parse import urljoin
 
@@ -21,7 +20,7 @@ class HTTPClient:
         **kwargs
     ) -> requests.Response:
         return self._request(
-            method=HTTPMethod.GET, route=route, headers=headers, params=params, **kwargs
+            method="GET", route=route, headers=headers, params=params, **kwargs
         )
 
     def post(
@@ -32,11 +31,11 @@ class HTTPClient:
         data: Optional[str] = None,
     ) -> requests.Response:
         return self._request(
-            method=HTTPMethod.POST, route=route, headers=headers, json=json, data=data
+            method="POST", route=route, headers=headers, json=json, data=data
         )
 
     def _request(
-        self, method: HTTPMethod, route: str, headers: Optional[dict] = None, **kwargs
+        self, method: str, route: str, headers: Optional[dict] = None, **kwargs
     ) -> requests.Response:
         with requests.Session() as session:
             url = urljoin(self._host, route)
