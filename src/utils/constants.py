@@ -1,5 +1,5 @@
 
-
+from http import HTTPStatus
 
 CART_MESSAGES = {
     "item_added": ["Item added to cart", "Товар добавлен в корзину"],
@@ -20,13 +20,11 @@ ORDER_MESSAGES = {
     "order_created": "Order created successfully",
     "order_created_ru": "Заказ оформлен"
 }
-
-
 HTTP_STATUSES = {
-    "unauthorized": 401,
-    "not_found": 404,
-    "bad_request": 400,
-    "internal_server_error": 500
+    "unauthorized": HTTPStatus.UNAUTHORIZED,
+    "not_found": HTTPStatus.NOT_FOUND,
+    "bad_request": HTTPStatus.BAD_REQUEST,
+    "internal_server_error": HTTPStatus.INTERNAL_SERVER_ERROR
 }
 
 

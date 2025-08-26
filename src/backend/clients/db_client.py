@@ -18,10 +18,10 @@ class DatabaseClient:
             try:
                 self.conn = psycopg2.connect(**self.config)
                 connection_info = {
-                    "host": config.get("host"),
-                    "port": config.get("port"),
-                    "database": config.get("dbname"),
-                    "user": config.get("user"),
+                    "host": self.config.get("host"),
+                    "port": self.config.get("port"),
+                    "database": self.config.get("dbname"),
+                    "user": self.config.get("user"),
                     "status": "connected",
                 }
                 attach_response_data(connection_info, "Информация о подключении к БД")
@@ -29,14 +29,13 @@ class DatabaseClient:
                 error_details = {
                     "error_type": "DatabaseConnectionError",
                     "error_message": str(e),
-                    "config": {k: v for k, v in config.items() if k != "password"},
+                    "config": {k: v for k, v in self.config.items() if k != "password"},
                 }
                 attach_error_details("DatabaseConnectionError", str(e), "database_connection", **error_details)
                 raise
 
-    @allure.step("Выполнение SQL запроса: {query}")
     def execute(self, query: str) -> None:
-        with allure.step(f"Выполнение SQL: {query}"):
+        with allure.step("Выполнение SQL запроса"):
             try:
                 attach_response_data(query, "SQL запрос")
                 cur = self.conn.cursor()

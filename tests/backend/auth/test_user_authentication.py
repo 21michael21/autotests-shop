@@ -1,119 +1,99 @@
-import http
-import os
-
 import allure
 import pytest
 
-from src.backend.clients.http_client.client import HTTPClient
-from src.backend.services.shop.adapter import ShopAdapter
 from src.builders.user_builder import UserBuilder
-from src.utils.allure_utils import attach_response_data, attach_error_details
-from src.utils.constants import AUTH_MESSAGES
+from src.utils.constants import AUTH_MESSAGES, HTTP_STATUSES
 from src.utils.validations import validate_response
-from tests.backend.conftest import create_test_adapter
 
 
 @allure.title("Регистрация нового пользователя")
 def test_user_registration(shop_service):
     new_user = UserBuilder().build()
     resp = shop_service.register_user(new_user["username"], new_user["password"])
-    assert resp.message == AUTH_MESSAGES["registration_successful"]
+    validate_response(resp, 200)
+    resp_data = resp.json()
+    assert resp_data["message"] == AUTH_MESSAGES["registration_successful"]
 
 
 @allure.title("Вход пользователя в систему")
 def test_user_login(shop_service, user):
     resp = shop_service.login_user(user["username"], user["password"])
-    assert isinstance(resp.token, str), "Токен должен быть строкой"
-    assert len(resp.token) > 0, "Токен не должен быть пустым"
+    validate_response(resp, 200)
+    resp_data = resp.json()
+    assert isinstance(resp_data["token"], str), "Токен должен быть строкой"
+    assert len(resp_data["token"]) > 0, "Токен не должен быть пустым"
 
 
 @allure.title("Попытка входа с неверными данными")
 @pytest.mark.parametrize(
-    "username,password,expected_status",
+    "username,password,expected_message",
     [
-        ("wrong_username", "correct_password", http.HTTPStatus.UNAUTHORIZED),
-        ("correct_username", "wrong_password", http.HTTPStatus.UNAUTHORIZED),
-        ("wrong_username", "wrong_password", http.HTTPStatus.UNAUTHORIZED),
+        ("wrong_username", "correct_password", "Invalid credentials"),
+        ("correct_username", "wrong_password", "Invalid credentials"),
+        ("wrong_username", "wrong_password", "Invalid credentials"),
     ],
 )
 def test_login_invalid_credentials(
-    shop_service, user, username, password, expected_status
+    shop_service, user, username, password, expected_message
 ):
     if username == "correct_username":
         username = user["username"]
     if password == "correct_password":
         password = user["password"]
 
-    adapter = create_test_adapter()
-
-    resp = adapter.login_user(username, password)
-    validate_response(resp, expected_status)
+    resp = shop_service.login_user(username, password)
+    validate_response(resp, HTTP_STATUSES["unauthorized"])
+    
+    message = resp.json().get("message", "")
+    assert message == expected_message, f"Неожиданное сообщение: {message}"
 
 
 @allure.title("Попытка регистрации с существующим username")
 def test_duplicate_username_registration(shop_service, user):
-    adapter = create_test_adapter()
-
-    resp = adapter.register_user(user["username"], "newpassword123")
-    validate_response(resp, http.HTTPStatus.BAD_REQUEST)
+    resp = shop_service.register_user(user["username"], "ValidPass123!")
+    validate_response(resp, HTTP_STATUSES["bad_request"])
     
     message = resp.json().get("message", "")
-    assert message in ["User already exists", "Password does not match the criteria"], \
-        f"Неожиданное сообщение: {message}"
-    
-    attach_response_data(resp.json(), "Ответ при попытке дублирования username")
+    assert message == "User already exists", f"Неожиданное сообщение: {message}"
 
 
 @allure.title("Попытка регистрации с невалидным username")
 @pytest.mark.parametrize(
-    "username,expected_status",
+    "username,expected_message",
     [
-        ("ab", http.HTTPStatus.BAD_REQUEST),
-        ("user@123", http.HTTPStatus.BAD_REQUEST),
-        ("user 123", http.HTTPStatus.BAD_REQUEST),
-        ("", http.HTTPStatus.BAD_REQUEST),
+        ("ab", "Username does not match the criteria"),
+        ("user@123", "Username does not match the criteria"),
+        ("user 123", "Username does not match the criteria"),
+        ("", "Username does not match the criteria"),
     ],
 )
-def test_invalid_username_registration(shop_service, username, expected_status):
-    adapter = create_test_adapter()
-
-    resp = adapter.register_user(username, "ValidPass123!")
-    validate_response(resp, expected_status)
+def test_invalid_username_registration(shop_service, username, expected_message):
+    resp = shop_service.register_user(username, "ValidPass123!")
+    validate_response(resp, HTTP_STATUSES["bad_request"])
     
     message = resp.json().get("message", "")
     valid_messages = [
         "Username does not match the criteria",
-        "User already exists", 
+        "User already exists",
         "Invalid data"
     ]
-    assert any(valid_msg in message for valid_msg in valid_messages), \
-        f"Неожиданное сообщение: {message}"
-    
-    attach_response_data(resp.json(), "Ответ при невалидном username")
+    assert any(valid_msg in message for valid_msg in valid_messages), f"Неожиданное сообщение: {message}"
 
 
 @allure.title("Попытка регистрации с невалидным password")
 @pytest.mark.parametrize(
-    "password,expected_status",
+    "password,expected_message",
     [
-        ("short", http.HTTPStatus.BAD_REQUEST),
-        ("nouppercase123!", http.HTTPStatus.BAD_REQUEST),
-        ("NOLOWERCASE123!", http.HTTPStatus.BAD_REQUEST),
-        ("NoSpecialChar123", http.HTTPStatus.BAD_REQUEST),
-        ("", http.HTTPStatus.BAD_REQUEST),
+        ("short", "Password does not match the criteria"),
+        ("nouppercase123!", "Password does not match the criteria"),
+        ("NOLOWERCASE123!", "Password does not match the criteria"),
+        ("NoSpecialChar123", "Password does not match the criteria"),
+        ("", "Password does not match the criteria"),
     ],
 )
-def test_invalid_password_registration(shop_service, password, expected_status):
-    from src.backend.services.shop.adapter import ShopAdapter
-    from src.backend.clients.http_client.client import HTTPClient
-    import os
-
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
-
-    resp = adapter.register_user("validuser123", password)
-    validate_response(resp, expected_status)
+def test_invalid_password_registration(shop_service, password, expected_message):
+    resp = shop_service.register_user("validuser123", password)
+    validate_response(resp, HTTP_STATUSES["bad_request"])
     
     message = resp.json().get("message", "")
     valid_messages = [
@@ -121,37 +101,24 @@ def test_invalid_password_registration(shop_service, password, expected_status):
         "User already exists",
         "Invalid data"
     ]
-    assert any(valid_msg in message for valid_msg in valid_messages), \
-        f"Неожиданное сообщение: {message}"
-    
-    attach_response_data(resp.json(), "Ответ при невалидном password")
+    assert any(valid_msg in message for valid_msg in valid_messages), f"Неожиданное сообщение: {message}"
 
 
 @allure.title("Попытка входа без авторизации")
 def test_login_without_authorization(shop_service):
-    from src.backend.services.shop.adapter import ShopAdapter
-    from src.backend.clients.http_client.client import HTTPClient
-    import os
-
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    adapter = ShopAdapter(http_client)
-
-    resp = adapter.login_user("", "")
-    validate_response(resp, http.HTTPStatus.UNAUTHORIZED)
-    
-    attach_response_data(resp.json(), "Ответ при попытке входа без данных")
+    resp = shop_service.login_user("", "")
+    validate_response(resp, HTTP_STATUSES["unauthorized"])
 
 
 @allure.title("Проверка структуры JWT токена")
 def test_jwt_token_structure(shop_service, user):
     resp = shop_service.login_user(user["username"], user["password"])
+    validate_response(resp, 200)
+    resp_data = resp.json()
     
-    assert hasattr(resp, 'token'), "Ответ должен содержать поле token"
-    assert isinstance(resp.token, str), "Токен должен быть строкой"
-    assert len(resp.token) > 0, "Токен не должен быть пустым"
+    assert "token" in resp_data, "Ответ должен содержать поле token"
+    assert isinstance(resp_data["token"], str), "Токен должен быть строкой"
+    assert len(resp_data["token"]) > 0, "Токен не должен быть пустым"
     
-    token_parts = resp.token.split('.')
+    token_parts = resp_data["token"].split('.')
     assert len(token_parts) == 3, "JWT токен должен содержать 3 части"
-    
-    attach_response_data({"token_length": len(resp.token), "token_format": "JWT"}, "Структура JWT токена")

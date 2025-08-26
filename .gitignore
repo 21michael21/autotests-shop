@@ -140,6 +140,7 @@ ENV/
 env.bak/
 venv.bak/
 
+env_example.txt
 # Allure и тестовые артефакты - все возможные варианты
 allure-results/
 allure-report/

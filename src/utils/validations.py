@@ -1,4 +1,3 @@
-import http
 import json
 from typing import Any, Dict, List, Mapping, Optional
 
@@ -23,8 +22,7 @@ def assert_eq(actual_value: Any, expected_value: Any, error_msg: str = None) -> 
         raise
 
 
-def _allure_attach_error(attach_response: dict, error_name: str):
-    attach_response_data(attach_response, error_name)
+
 
 
 def _dict_contains(superset: Mapping[str, Any], subset: Mapping[str, Any]) -> bool:
@@ -62,7 +60,7 @@ def assert_json_contains(
 
 def validate_response(
     response: requests.Response,
-    expected_status_code: http.HTTPStatus,
+    expected_status_code: int,
     expected_json: Optional[dict] = None,
     expected_json_partial: Optional[dict] = None,
 ) -> None:

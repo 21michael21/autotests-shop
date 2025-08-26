@@ -1,14 +1,9 @@
-import http
-import os
-
 import allure
 import pytest
 
-from src.backend.clients.http_client.client import HTTPClient
-from src.backend.services.shop.adapter import ShopAdapter
 from src.builders.user_builder import UserBuilder
 from src.utils.validations import validate_response, validate_order_response
-from tests.backend.conftest import create_test_adapter
+from src.utils.constants import HTTP_STATUSES
 
 pytestmark = [
     allure.epic("Система управления заказами"),
@@ -18,73 +13,62 @@ pytestmark = [
 
 
 @allure.title("Создание заказа")
-def test_create_order(shop_service, user, add_random_item):
+def test_create_order(shop_service, user, random_item_in_cart):
     resp = shop_service.create_order(user["token"])
-    assert "order_id" in resp
-    assert resp["order_id"] > 0
+    validate_response(resp, 200)
+    resp_data = resp.json()
+    assert "order_id" in resp_data
+    assert resp_data["order_id"] > 0
 
 
 @allure.title("Получение деталей заказа")
-def test_get_order_details(shop_service, user, created_order_id):
-    order_id = created_order_id
+def test_get_order_details(shop_service, user, order_id):
     resp = shop_service.get_order_details(user["token"], order_id)
-    validate_order_response(resp, expected_order_id=order_id)
+    validate_response(resp, 200)
+    validate_order_response(resp.json(), expected_order_id=order_id)
 
 
 @allure.title("Попытка получения несуществующего заказа")
 def test_get_nonexistent_order(shop_service, user):
-
-    adapter = create_test_adapter()
-
     nonexistent_order_id = 9999999999999999999999999
-    resp = adapter.get_order_details(user["token"], nonexistent_order_id)
-    validate_response(resp, http.HTTPStatus.NOT_FOUND)
+    resp = shop_service.get_order_details(user["token"], nonexistent_order_id)
+    validate_response(resp, HTTP_STATUSES["not_found"])
 
 
 @allure.title("Попытка создания заказа без авторизации")
 def test_create_order_unauthorized(shop_service):
-    adapter = create_test_adapter()
-
     invalid_token = "Bearer invalid_token"
-    resp = adapter.create_order(invalid_token)
-    validate_response(resp, http.HTTPStatus.UNAUTHORIZED)
+    resp = shop_service.create_order(invalid_token)
+    validate_response(resp, HTTP_STATUSES["unauthorized"])
 
 
 @allure.title("Попытка создания заказа с пустой корзиной")
 def test_create_order_empty_cart(shop_service, user):
-    try:
-        cart = shop_service.get_cart(user["token"])
-        if cart.items:
-            for item in cart.items:
-                shop_service.remove_item_from_cart(user["token"], item.item_id)
-    except Exception:
-        pass
+    shop_service.clear_cart(user["token"])
 
-    adapter = create_test_adapter()
-
-    resp = adapter.create_order(user["token"])
-    validate_response(resp, http.HTTPStatus.BAD_REQUEST)
+    resp = shop_service.create_order(user["token"])
+    validate_response(resp, HTTP_STATUSES["bad_request"])
 
 
 @allure.title("Попытка получения заказа другого пользователя")
-def test_get_other_user_order(shop_service, user, created_order_id):
-    from src.builders.user_builder import UserBuilder
-
+def test_get_other_user_order(shop_service, user, order_id):
     new_user = UserBuilder().build()
     reg_resp = shop_service.register_user(new_user["username"], new_user["password"])
+    validate_response(reg_resp, 200)
     login_resp = shop_service.login_user(new_user["username"], new_user["password"])
-    second_user_token = login_resp.token
+    validate_response(login_resp, 200)
+    second_user_token = login_resp.json()["token"]
 
-    adapter = create_test_adapter()
-
-    resp = adapter.get_order_details(second_user_token, created_order_id)
-    validate_response(resp, http.HTTPStatus.NOT_FOUND)
+    resp = shop_service.get_order_details(second_user_token, order_id)
+    validate_response(resp, HTTP_STATUSES["not_found"])
 
 
 @allure.title("Проверка очистки корзины после создания заказа")
-def test_cart_cleared_after_order(shop_service, user, add_random_item):
+def test_cart_cleared_after_order(shop_service, user, random_item_in_cart):
     order_resp = shop_service.create_order(user["token"])
-    order_id = order_resp["order_id"]
+    validate_response(order_resp, 200)
+    order_data = order_resp.json()
+    order_id = order_data["order_id"]
 
     cart = shop_service.get_cart(user["token"])
     assert len(cart.items) == 0, "Корзина должна быть очищена после создания заказа"

@@ -1,5 +1,4 @@
 import json
-import os
 import random
 import secrets
 import string
@@ -7,23 +6,17 @@ import string
 import allure
 import pytest
 
-
+from config import BASE_URL
 from src.backend.clients.http_client.client import HTTPClient
 from src.backend.services.shop.adapter import ShopAdapter
 from src.backend.services.shop.service import ShopService
 from src.utils.allure_utils import attach_test_data, attach_response_data, attach_error_details
-
-
-def create_test_adapter():
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    http_client = HTTPClient(base_url)
-    return ShopAdapter(http_client)
+from src.utils.validations import validate_response
 
 
 @pytest.fixture
 def http_client():
-    base_url = os.getenv("API_BASE_URL", "http://localhost:5050")
-    return HTTPClient(base_url)
+    return HTTPClient(BASE_URL)
 
 @pytest.fixture
 def shop_adapter(http_client: HTTPClient) -> ShopAdapter:
@@ -46,12 +39,14 @@ def user(shop_service):
     password = upper + lower + digit + special + rest
     
     reg_resp = shop_service.register_user(username, password)
-    attach_response_data(reg_resp.model_dump(), "Ответ регистрации")
+    validate_response(reg_resp, 200)
+    attach_response_data(reg_resp.json(), "Ответ регистрации")
     
     login_resp = shop_service.login_user(username, password)
-    attach_response_data(login_resp.model_dump(), "Ответ логина")
+    validate_response(login_resp, 200)
+    attach_response_data(login_resp.json(), "Ответ логина")
     
-    return {"username": username, "password": password, "token": login_resp.token}
+    return {"username": username, "password": password, "token": login_resp.json()["token"]}
 
 @pytest.fixture
 def random_item(shop_service: ShopService, user: dict) -> dict:
@@ -82,19 +77,22 @@ def random_item(shop_service: ShopService, user: dict) -> dict:
         raise
 
 @pytest.fixture
-def add_random_item(shop_service: ShopService, random_item: dict, user: dict):
+def random_item_in_cart(shop_service: ShopService, random_item: dict, user: dict):
     add_resp = shop_service.add_item_to_cart(user["token"], random_item["item_id"], random_item["quantity"])
+    validate_response(add_resp, 200)
     
-    attach_response_data(add_resp, "Ответ добавления товара в корзину")
+    attach_response_data(add_resp.json(), "Ответ добавления товара в корзину")
     
     return random_item
 
 @pytest.fixture
-def created_order_id(shop_service: ShopService, user: dict, add_random_item):
+def order_id(shop_service: ShopService, user: dict, random_item_in_cart):
     order_resp = shop_service.create_order(user["token"])
-    order_id = order_resp["order_id"]
+    validate_response(order_resp, 200)
+    order_data = order_resp.json()
+    order_id = order_data["order_id"]
     
-    attach_response_data(order_resp, "Ответ создания заказа")
+    attach_response_data(order_data, "Ответ создания заказа")
     
     return order_id
 
