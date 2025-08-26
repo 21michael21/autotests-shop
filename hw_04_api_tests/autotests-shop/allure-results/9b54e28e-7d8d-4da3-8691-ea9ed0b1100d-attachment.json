@@ -1,6 +1,0 @@
-{
-  "actual": 401,
-  "expected": 401,
-  "type_actual": "<class 'int'>",
-  "type_expected": "<enum 'HTTPStatus'>"
-}

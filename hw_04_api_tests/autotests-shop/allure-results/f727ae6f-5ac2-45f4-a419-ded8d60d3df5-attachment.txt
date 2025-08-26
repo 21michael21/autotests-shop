@@ -1,7 +1,0 @@
-
-            DELETE FROM carts
-            WHERE user_id = (
-                SELECT id FROM users
-                WHERE username = 'sl0KD8dF'
-            )
-            

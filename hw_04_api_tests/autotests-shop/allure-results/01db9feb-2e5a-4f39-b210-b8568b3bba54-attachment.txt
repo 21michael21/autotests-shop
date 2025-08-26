@@ -1,1 +1,0 @@
-OrdersAdapter готов к работе с API заказов

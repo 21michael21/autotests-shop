@@ -1,1 +1,0 @@
-Заголовки: {'Authorization': 'Bearer invalid_token'}

@@ -1,6 +1,0 @@
-{
-  "method": "random.choices",
-  "characters": "ascii_letters + digits",
-  "length": 8,
-  "result": "8uN5oMP8"
-}

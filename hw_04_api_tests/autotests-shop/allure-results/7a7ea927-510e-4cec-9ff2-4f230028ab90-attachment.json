@@ -1,8 +1,0 @@
-{
-  "host": "localhost",
-  "port": 5432,
-  "database": "shopdb",
-  "user": "shopuser",
-  "client_type": "DbClient",
-  "scope": "session"
-}

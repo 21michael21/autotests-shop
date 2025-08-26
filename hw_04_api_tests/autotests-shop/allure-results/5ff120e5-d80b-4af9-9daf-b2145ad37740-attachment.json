@@ -1,9 +1,0 @@
-{
-  "adapter_type": "CartAdapter",
-  "http_client": "<src.backend.clients.http_client.HTTPClient object at 0x10443ee10>",
-  "endpoints": [
-    "/cart/",
-    "/cart/add",
-    "/cart/remove"
-  ]
-}
