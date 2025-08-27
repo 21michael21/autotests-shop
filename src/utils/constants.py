@@ -20,13 +20,6 @@ ORDER_MESSAGES = {
     "order_created": "Order created successfully",
     "order_created_ru": "Заказ оформлен"
 }
-HTTP_STATUSES = {
-    "unauthorized": HTTPStatus.UNAUTHORIZED,
-    "not_found": HTTPStatus.NOT_FOUND,
-    "bad_request": HTTPStatus.BAD_REQUEST,
-    "internal_server_error": HTTPStatus.INTERNAL_SERVER_ERROR
-}
-
 
 VALIDATION_REQUIREMENTS = {
     "username": {

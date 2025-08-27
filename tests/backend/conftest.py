@@ -14,6 +14,46 @@ from src.utils.allure_utils import attach_test_data, attach_response_data, attac
 from src.utils.validations import validate_response
 
 
+def _get_random_item_with_error_handling(shop_service, user):
+    """
+    Получает случайный товар из каталога с обработкой ошибок.
+    Try-except используется для корректной обработки ситуаций когда каталог пуст
+    или API недоступен, что позволяет тестам продолжить выполнение с информативными сообщениями.
+    """
+    try:
+        catalog = shop_service.get_catalog(user["token"])
+        if catalog.items:
+            item = random.choice(catalog.items)
+            item_data = {
+                "item_id": item.id,
+                "name": item.name,
+                "brand": item.brand,
+                "price": item.price,
+                "quantity": random.randint(1, 3)
+            }
+            
+            attach_test_data(item_data, "Полученный случайный товар")
+            
+            return item_data
+        else:
+            raise ValueError("Каталог пуст - нет доступных товаров для тестирования")
+            
+    except Exception as e:
+        error_details = {
+            "error_type": type(e).__name__,
+            "error_message": str(e),
+            "operation": "get_random_item",
+            "user_token": user["token"][:10] + "..." if user["token"] else "None"
+        }
+        attach_error_details(
+            error_type=type(e).__name__,
+            error_message=str(e),
+            operation="get_random_item",
+            **error_details
+        )
+        raise
+
+
 @pytest.fixture
 def http_client():
     return HTTPClient(BASE_URL)
@@ -50,31 +90,7 @@ def user(shop_service):
 
 @pytest.fixture
 def random_item(shop_service: ShopService, user: dict) -> dict:
-    try:
-        catalog = shop_service.get_catalog(user["token"])
-        if catalog.items:
-            item = random.choice(catalog.items)
-            item_data = {
-                "item_id": item.id,
-                "name": item.name,
-                "brand": item.brand,
-                "price": item.price,
-                "quantity": random.randint(1, 3)
-            }
-            
-            attach_test_data(item_data, "Полученный случайный товар")
-            
-            return item_data
-        else:
-            raise Exception("Каталог пуст")
-            
-    except Exception as e:
-        attach_error_details(
-            error_type=type(e).__name__,
-            error_message=str(e),
-            operation="get_random_item"
-        )
-        raise
+    return _get_random_item_with_error_handling(shop_service, user)
 
 @pytest.fixture
 def random_item_in_cart(shop_service: ShopService, random_item: dict, user: dict):

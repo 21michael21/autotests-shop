@@ -111,9 +111,14 @@ class DatabaseClient:
             self.execute(carts_query)
 
     def __del__(self):
-        try:
-            if hasattr(self, "conn") and self.conn:
+        if hasattr(self, "conn") and self.conn:
+            try:
                 with allure.step("Закрытие соединения с БД"):
                     self.conn.close()
-        except Exception:
-            pass
+            except Exception as e:
+                error_details = {
+                    "error_type": type(e).__name__,
+                    "error_message": str(e),
+                    "operation": "database_connection_close"
+                }
+                attach_error_details(type(e).__name__, str(e), "database_connection_close", **error_details)

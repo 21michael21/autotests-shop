@@ -3,7 +3,7 @@ import pytest
 
 from src.builders.user_builder import UserBuilder
 from src.utils.validations import validate_response, validate_order_response
-from src.utils.constants import HTTP_STATUSES
+from http import HTTPStatus
 
 pytestmark = [
     allure.epic("Система управления заказами"),
@@ -32,14 +32,14 @@ def test_get_order_details(shop_service, user, order_id):
 def test_get_nonexistent_order(shop_service, user):
     nonexistent_order_id = 9999999999999999999999999
     resp = shop_service.get_order_details(user["token"], nonexistent_order_id)
-    validate_response(resp, HTTP_STATUSES["not_found"])
+    validate_response(resp, HTTPStatus.NOT_FOUND)
 
 
 @allure.title("Попытка создания заказа без авторизации")
 def test_create_order_unauthorized(shop_service):
     invalid_token = "Bearer invalid_token"
     resp = shop_service.create_order(invalid_token)
-    validate_response(resp, HTTP_STATUSES["unauthorized"])
+    validate_response(resp, HTTPStatus.UNAUTHORIZED)
 
 
 @allure.title("Попытка создания заказа с пустой корзиной")
@@ -47,7 +47,7 @@ def test_create_order_empty_cart(shop_service, user):
     shop_service.clear_cart(user["token"])
 
     resp = shop_service.create_order(user["token"])
-    validate_response(resp, HTTP_STATUSES["bad_request"])
+    validate_response(resp, HTTPStatus.BAD_REQUEST)
 
 
 @allure.title("Попытка получения заказа другого пользователя")
@@ -60,7 +60,7 @@ def test_get_other_user_order(shop_service, user, order_id):
     second_user_token = login_resp.json()["token"]
 
     resp = shop_service.get_order_details(second_user_token, order_id)
-    validate_response(resp, HTTP_STATUSES["not_found"])
+    validate_response(resp, HTTPStatus.NOT_FOUND)
 
 
 @allure.title("Проверка очистки корзины после создания заказа")

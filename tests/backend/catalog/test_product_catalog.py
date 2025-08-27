@@ -1,8 +1,8 @@
 import allure
 import pytest
 
-from src.utils.validations import validate_catalog_response, validate_response
-from src.utils.constants import HTTP_STATUSES
+from src.utils.validations import validate_response, validate_catalog_response
+from http import HTTPStatus
 
 
 @allure.title("Получение каталога товаров")
@@ -31,14 +31,14 @@ def test_sort_by_price(shop_service, user):
     catalog_data = resp.model_dump()
     validate_catalog_response(catalog_data["items"])
     
-    shop_service.validate_items_sorted_by_price(catalog_data["items"], "asc")
+    assert shop_service.check_items_sorted_by_price(catalog_data["items"], "asc"), "Товары должны быть отсортированы по возрастанию цены"
 
 
 @pytest.mark.skip(reason="БАГ: API принимает отрицательные цены и возвращает успешный ответ, ожидался 400 Bad Request")
 @allure.title("Попытка фильтрации с невалидными параметрами")
 def test_invalid_filter_params(shop_service, user):
     resp = shop_service.get_catalog(user["token"], min_price=-100, max_price="invalid")
-    validate_response(resp, HTTP_STATUSES["bad_request"])
+    validate_response(resp, HTTPStatus.BAD_REQUEST)
 
 
 @allure.title("Фильтрация товаров по бренду")
