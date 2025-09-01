@@ -111,9 +111,9 @@ def test_login_without_authorization(shop_service):
     validate_response(resp, HTTPStatus.UNAUTHORIZED)
 
 
-@pytest.mark.skip(reason="БАГ: API возвращает 500 Internal Server Error вместо 400 Bad Request для длинного username")
-@allure.title("Тест на очень длинные значения")
-def test_very_long_values(shop_service):
+@pytest.mark.skip(reason="БАГ: API возвращает 500 Internal Server Error вместо 400 Bad Request для слишком длинных username и password")
+@allure.title("Регистрация с слишком длинными username и password")
+def test_registration_with_too_long_username_and_password(shop_service):
     long_username = "a" * 1000
     resp = shop_service.register_user(long_username, "ValidPass123!")
     validate_response(resp, HTTPStatus.BAD_REQUEST)
